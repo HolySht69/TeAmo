@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Te amo Mi Reina</title>
+    <title>Arrow Love Game</title>
     <style>
         * {
             margin: 0;
@@ -12,159 +12,210 @@
         }
 
         body {
-            background-color: #000;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Arial', sans-serif;
             overflow: hidden;
-            cursor: pointer;
+            cursor: crosshair;
             user-select: none;
         }
 
-        .main-text {
-            position: fixed;
+        .game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .target {
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff0000 0deg 45deg,
+                #ffffff 45deg 90deg,
+                #ff0000 90deg 135deg,
+                #ffffff 135deg 180deg,
+                #ff0000 180deg 225deg,
+                #ffffff 225deg 270deg,
+                #ff0000 270deg 315deg,
+                #ffffff 315deg 360deg
+            );
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .target::before {
+            content: '';
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 4rem;
-            font-weight: bold;
-            color: #8B5CF6;
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
-            z-index: 100;
-            animation: textGlow 3s ease-in-out infinite;
-            text-align: center;
+            width: 60px;
+            height: 60px;
+            background: #ff0000;
+            border-radius: 50%;
+            border: 8px solid #ffffff;
         }
 
-        @keyframes textGlow {
-            0%, 100% {
-                text-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
-                transform: translate(-50%, -50%) scale(1);
-            }
-            50% {
-                text-shadow: 0 0 40px rgba(139, 92, 246, 1), 0 0 60px rgba(139, 92, 246, 0.6);
-                transform: translate(-50%, -50%) scale(1.05);
-            }
-        }
-
-        .click-text {
+        .target::after {
+            content: '';
             position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #ff0000;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+        }
+
+        .bow {
+            position: absolute;
+            left: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 120px;
+            z-index: 20;
+        }
+
+        .bow-body {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 100px;
+            background: linear-gradient(to bottom, #8B4513, #A0522D);
+            border-radius: 4px;
+        }
+
+        .bow-string {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100px;
+            background: #ffffff;
+            border-radius: 1px;
+        }
+
+        .arrow {
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, #8B4513, #A0522D);
+            border-radius: 2px;
+            transform-origin: left center;
+            z-index: 15;
+        }
+
+        .arrow::before {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid #8B4513;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 8px;
+            background: #ffffff;
+            border-radius: 2px;
+        }
+
+        .score {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
             font-size: 1.5rem;
             font-weight: bold;
-            pointer-events: none;
-            animation: clickAnimation 2s ease-out forwards;
-            z-index: 200;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 100;
         }
 
-        @keyframes clickAnimation {
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .love-message {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
+            z-index: 200;
+            animation: loveFloat 3s ease-out forwards;
+        }
+
+        @keyframes loveFloat {
             0% {
                 opacity: 1;
                 transform: scale(0.5) translateY(0);
             }
             50% {
                 opacity: 1;
-                transform: scale(1.2) translateY(-20px);
+                transform: scale(1.5) translateY(-50px);
             }
             100% {
                 opacity: 0;
-                transform: scale(1) translateY(-40px);
+                transform: scale(1) translateY(-100px);
             }
         }
 
-        .flower {
+        .heart {
             position: absolute;
+            color: #ff69b4;
+            font-size: 1.5rem;
             pointer-events: none;
-            animation: flowerFloat 8s linear infinite;
-        }
-
-        .flower-container {
-            position: relative;
-            width: 60px;
-            height: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
-        .flower-head {
-            position: relative;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .flower-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .flower-stem {
-            width: 3px;
-            height: 50px;
-            background: linear-gradient(to bottom, #90EE90, #7CFC00);
-            border-radius: 2px;
-            position: relative;
-            margin-top: 5px;
-        }
-
-        .flower-leaves {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .flower-leaf {
-            position: absolute;
-            width: 8px;
-            height: 6px;
-            background: linear-gradient(to bottom, #90EE90, #7CFC00);
-            border-radius: 50% 50% 50% 0;
-            transform-origin: center;
-        }
-
-        .flower-leaf.left {
-            left: -6px;
-            top: 15px;
-            transform: rotate(-45deg);
-        }
-
-        .flower-leaf.right {
-            right: -6px;
-            top: 25px;
-            transform: rotate(45deg) scaleX(-1);
-        }
-
-        @keyframes flowerFloat {
-            0% {
-                transform: translateY(100vh) rotate(0deg) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg) scale(1);
-                opacity: 0;
-            }
-        }
-
-        .sparkle {
-            position: absolute;
-            font-size: 1.2rem;
-            pointer-events: none;
-            animation: sparkleAnimation 1.5s ease-out forwards;
             z-index: 150;
+            animation: heartFloat 2s ease-out forwards;
         }
 
-        @keyframes sparkleAnimation {
+        @keyframes heartFloat {
             0% {
                 opacity: 1;
                 transform: scale(0) rotate(0deg);
@@ -179,217 +230,358 @@
             }
         }
 
-        /* Purple color variations for flowers */
-        .flower-purple-1 { background: linear-gradient(135deg, #8B5CF6, #A855F7); }
-        .flower-purple-2 { background: linear-gradient(135deg, #7C3AED, #8B5CF6); }
-        .flower-purple-3 { background: linear-gradient(135deg, #A855F7, #C084FC); }
-        .flower-purple-4 { background: linear-gradient(135deg, #6D28D9, #7C3AED); }
-        .flower-purple-5 { background: linear-gradient(135deg, #C084FC, #D8B4FE); }
-        .flower-purple-6 { background: linear-gradient(135deg, #5B21B6, #6D28D9); }
-        .flower-purple-7 { background: linear-gradient(135deg, #D8B4FE, #E9D5FF); }
+        .power-meter {
+            position: absolute;
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            border: 2px solid white;
+            z-index: 100;
+        }
 
-        .center-purple-1 { background: linear-gradient(135deg, #FCD34D, #F59E0B); }
-        .center-purple-2 { background: linear-gradient(135deg, #F59E0B, #D97706); }
-        .center-purple-3 { background: linear-gradient(135deg, #D97706, #B45309); }
-        .center-purple-4 { background: linear-gradient(135deg, #B45309, #92400E); }
-        .center-purple-5 { background: linear-gradient(135deg, #92400E, #78350F); }
-        .center-purple-6 { background: linear-gradient(135deg, #78350F, #451A03); }
-        .center-purple-7 { background: linear-gradient(135deg, #451A03, #92400E); }
+        .power-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to top, #ff69b4, #ff1493);
+            border-radius: 8px;
+            transition: height 0.1s ease;
+        }
 
-        /* Purple color variations for click text */
-        .text-purple-1 { color: #8B5CF6; }
-        .text-purple-2 { color: #A855F7; }
-        .text-purple-3 { color: #7C3AED; }
-        .text-purple-4 { color: #C084FC; }
-        .text-purple-5 { color: #6D28D9; }
-        .text-purple-6 { color: #D8B4FE; }
-        .text-purple-7 { color: #E9D5FF; }
+        .power-label {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            z-index: 100;
+        }
 
         @media (max-width: 768px) {
-            .main-text {
-                font-size: 2.5rem;
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .target {
+                right: 50px;
+                width: 150px;
+                height: 150px;
+            }
+            
+            .target::before {
+                width: 45px;
+                height: 45px;
+                border-width: 6px;
+            }
+            
+            .target::after {
+                width: 15px;
+                height: 15px;
+                border-width: 3px;
+            }
+            
+            .bow {
+                left: 50px;
+            }
+            
+            .power-meter {
+                left: 20px;
+                height: 150px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="main-text">Te amo Mi Reina</div>
+    <div class="game-container">
+        <h1 class="title">🏹 Arrow Love Game 🏹</h1>
+        <div class="score">Score: <span id="score">0</span></div>
+        
+        <div class="power-meter">
+            <div class="power-fill" id="powerFill"></div>
+            <div class="power-label">POWER</div>
+        </div>
+        
+        <div class="bow">
+            <div class="bow-body"></div>
+            <div class="bow-string"></div>
+        </div>
+        
+        <div class="target" id="target"></div>
+        
+        <div class="instructions">
+            Click and drag to aim, release to shoot!<br>
+            Hit the bullseye for love messages! 💕
+        </div>
+    </div>
 
     <script>
-        const purpleColors = [
-            'flower-purple-1', 'flower-purple-2', 'flower-purple-3', 'flower-purple-4',
-            'flower-purple-5', 'flower-purple-6', 'flower-purple-7'
+        let score = 0;
+        let isAiming = false;
+        let power = 0;
+        let powerInterval;
+        let arrows = [];
+        let loveMessages = [
+            "I love you! 💕",
+            "Te amo! 💜",
+            "Je t'aime! 💖",
+            "Ti amo! 💝",
+            "Ich liebe dich! 💗",
+            "Te quiero! 💞",
+            "Saranghae! 💟",
+            "Aishiteru! 💘"
         ];
 
-        const centerColors = [
-            'center-purple-1', 'center-purple-2', 'center-purple-3', 'center-purple-4',
-            'center-purple-5', 'center-purple-6', 'center-purple-7'
-        ];
+        const gameContainer = document.querySelector('.game-container');
+        const target = document.getElementById('target');
+        const scoreElement = document.getElementById('score');
+        const powerFill = document.getElementById('powerFill');
 
-        const textColors = [
-            'text-purple-1', 'text-purple-2', 'text-purple-3', 'text-purple-4',
-            'text-purple-5', 'text-purple-6', 'text-purple-7'
-        ];
-
-        // Create flower structure
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.className = 'flower';
-            
-            const flowerContainer = document.createElement('div');
-            flowerContainer.className = 'flower-container';
-            
-            // Create flower head
-            const flowerHead = document.createElement('div');
-            flowerHead.className = 'flower-head';
-            
-            // Add random purple color
-            const colorIndex = Math.floor(Math.random() * purpleColors.length);
-            flowerHead.classList.add(purpleColors[colorIndex]);
-            
-            // Create flower center
-            const flowerCenter = document.createElement('div');
-            flowerCenter.className = 'flower-center';
-            flowerCenter.classList.add(centerColors[colorIndex]);
-            
-            flowerHead.appendChild(flowerCenter);
-            flowerContainer.appendChild(flowerHead);
-            
-            // Create stem
-            const stem = document.createElement('div');
-            stem.className = 'flower-stem';
-            
-            // Create leaves
-            const leaves = document.createElement('div');
-            leaves.className = 'flower-leaves';
-            
-            const leftLeaf = document.createElement('div');
-            leftLeaf.className = 'flower-leaf left';
-            leaves.appendChild(leftLeaf);
-            
-            const rightLeaf = document.createElement('div');
-            rightLeaf.className = 'flower-leaf right';
-            leaves.appendChild(rightLeaf);
-            
-            stem.appendChild(leaves);
-            flowerContainer.appendChild(stem);
-            
-            flower.appendChild(flowerContainer);
-            
-            // Random position and animation duration
-            flower.style.left = Math.random() * 100 + '%';
-            flower.style.animationDuration = (Math.random() * 4 + 6) + 's';
-            flower.style.animationDelay = Math.random() * 2 + 's';
-            
-            return flower;
+        // Get target position
+        function getTargetPosition() {
+            const rect = target.getBoundingClientRect();
+            return {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
         }
 
-        // Create click text
-        function createClickText(x, y) {
-            const text = document.createElement('div');
-            text.className = 'click-text';
-            text.textContent = 'Te amo Mi Reina';
+        // Calculate distance between two points
+        function getDistance(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        }
+
+        // Create arrow
+        function createArrow(x, y, angle, power) {
+            const arrow = document.createElement('div');
+            arrow.className = 'arrow';
+            arrow.style.left = x + 'px';
+            arrow.style.top = y + 'px';
+            arrow.style.transform = `rotate(${angle}deg)`;
             
-            // Random purple color
-            const colorIndex = Math.floor(Math.random() * textColors.length);
-            text.classList.add(textColors[colorIndex]);
+            gameContainer.appendChild(arrow);
             
-            text.style.left = x + 'px';
-            text.style.top = y + 'px';
+            // Animate arrow flight
+            const targetPos = getTargetPosition();
+            const distance = getDistance(x, y, targetPos.x, targetPos.y);
+            const duration = distance / (power * 2); // Speed based on power
             
-            document.body.appendChild(text);
+            arrow.style.transition = `all ${duration}ms ease-out`;
             
-            // Remove after animation
             setTimeout(() => {
-                text.remove();
+                arrow.style.left = targetPos.x + 'px';
+                arrow.style.top = targetPos.y + 'px';
+            }, 10);
+            
+            // Check hit after animation
+            setTimeout(() => {
+                checkHit(arrow, targetPos.x, targetPos.y);
+            }, duration + 10);
+            
+            arrows.push(arrow);
+            
+            // Remove arrow after some time
+            setTimeout(() => {
+                if (arrow.parentNode) {
+                    arrow.remove();
+                    arrows = arrows.filter(a => a !== arrow);
+                }
+            }, 5000);
+        }
+
+        // Check if arrow hit the target
+        function checkHit(arrow, targetX, targetY) {
+            const arrowRect = arrow.getBoundingClientRect();
+            const arrowX = arrowRect.left + arrowRect.width / 2;
+            const arrowY = arrowRect.top + arrowRect.height / 2;
+            
+            const distance = getDistance(arrowX, arrowY, targetX, targetY);
+            const targetRadius = 100; // Target radius in pixels
+            
+            if (distance <= targetRadius) {
+                // Hit the target
+                score += 10;
+                scoreElement.textContent = score;
+                
+                // Check if it's a bullseye (center)
+                if (distance <= 10) {
+                    // Bullseye!
+                    score += 50;
+                    scoreElement.textContent = score;
+                    
+                    // Show love message
+                    showLoveMessage(targetX, targetY);
+                    
+                    // Create hearts
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            createHeart(targetX + (Math.random() - 0.5) * 100, 
+                                      targetY + (Math.random() - 0.5) * 100);
+                        }, i * 100);
+                    }
+                }
+                
+                // Target hit effect
+                target.style.transform = 'translateY(-50%) scale(1.1)';
+                setTimeout(() => {
+                    target.style.transform = 'translateY(-50%) scale(1)';
+                }, 200);
+            }
+        }
+
+        // Show love message
+        function showLoveMessage(x, y) {
+            const message = document.createElement('div');
+            message.className = 'love-message';
+            message.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+            message.style.left = x + 'px';
+            message.style.top = y + 'px';
+            
+            gameContainer.appendChild(message);
+            
+            setTimeout(() => {
+                if (message.parentNode) {
+                    message.remove();
+                }
+            }, 3000);
+        }
+
+        // Create floating heart
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💖';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            
+            gameContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.remove();
+                }
             }, 2000);
         }
 
-        // Create sparkle effect
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.textContent = '✨';
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            
-            document.body.appendChild(sparkle);
-            
-            // Remove after animation
-            setTimeout(() => {
-                sparkle.remove();
-            }, 1500);
-        }
-
-        // Handle click events
-        document.addEventListener('click', function(e) {
-            // Create click text
-            createClickText(e.clientX - 50, e.clientY - 20);
-            
-            // Create sparkles
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => {
-                    const offsetX = (Math.random() - 0.5) * 100;
-                    const offsetY = (Math.random() - 0.5) * 100;
-                    createSparkle(e.clientX + offsetX, e.clientY + offsetY);
-                }, i * 100);
+        // Mouse events
+        gameContainer.addEventListener('mousedown', function(e) {
+            if (e.target === gameContainer) {
+                isAiming = true;
+                power = 0;
+                
+                // Start power meter
+                powerInterval = setInterval(() => {
+                    power = Math.min(power + 2, 100);
+                    powerFill.style.height = power + '%';
+                }, 50);
             }
         });
 
-        // Create background flowers
-        function createBackgroundFlowers() {
-            setInterval(() => {
-                const flower = createFlower();
-                document.body.appendChild(flower);
+        gameContainer.addEventListener('mousemove', function(e) {
+            if (isAiming) {
+                const rect = gameContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
                 
-                // Remove flower after animation
-                setTimeout(() => {
-                    if (flower.parentNode) {
-                        flower.remove();
-                    }
-                }, 10000);
-            }, 2000);
-        }
-
-        // Create initial flowers
-        function createInitialFlowers() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const flower = createFlower();
-                    document.body.appendChild(flower);
-                    
-                    setTimeout(() => {
-                        if (flower.parentNode) {
-                            flower.remove();
-                        }
-                    }, 10000);
-                }, i * 500);
+                // Update bow rotation
+                const bow = document.querySelector('.bow');
+                const angle = Math.atan2(y - window.innerHeight / 2, x - 100) * 180 / Math.PI;
+                bow.style.transform = `translateY(-50%) rotate(${angle}deg)`;
             }
-        }
+        });
 
-        // Initialize
-        window.onload = function() {
-            createInitialFlowers();
-            createBackgroundFlowers();
-        };
+        gameContainer.addEventListener('mouseup', function(e) {
+            if (isAiming) {
+                isAiming = false;
+                clearInterval(powerInterval);
+                
+                const rect = gameContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Calculate angle
+                const angle = Math.atan2(y - window.innerHeight / 2, x - 100) * 180 / Math.PI;
+                
+                // Shoot arrow
+                createArrow(100, window.innerHeight / 2, angle, power);
+                
+                // Reset power meter
+                power = 0;
+                powerFill.style.height = '0%';
+                
+                // Reset bow rotation
+                const bow = document.querySelector('.bow');
+                bow.style.transform = 'translateY(-50%) rotate(0deg)';
+            }
+        });
 
-        // Add touch support for mobile
-        document.addEventListener('touchstart', function(e) {
+        // Touch events for mobile
+        gameContainer.addEventListener('touchstart', function(e) {
             e.preventDefault();
             const touch = e.touches[0];
+            const rect = gameContainer.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
             
-            // Create click text
-            createClickText(touch.clientX - 50, touch.clientY - 20);
-            
-            // Create sparkles
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => {
-                    const offsetX = (Math.random() - 0.5) * 100;
-                    const offsetY = (Math.random() - 0.5) * 100;
-                    createSparkle(touch.clientX + offsetX, touch.clientY + offsetY);
-                }, i * 100);
+            if (x < 200) { // Only if touching near the bow
+                isAiming = true;
+                power = 0;
+                
+                powerInterval = setInterval(() => {
+                    power = Math.min(power + 2, 100);
+                    powerFill.style.height = power + '%';
+                }, 50);
             }
-        }, { passive: false });
+        });
+
+        gameContainer.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            if (isAiming) {
+                const touch = e.touches[0];
+                const rect = gameContainer.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                
+                const bow = document.querySelector('.bow');
+                const angle = Math.atan2(y - window.innerHeight / 2, x - 100) * 180 / Math.PI;
+                bow.style.transform = `translateY(-50%) rotate(${angle}deg)`;
+            }
+        });
+
+        gameContainer.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            if (isAiming) {
+                isAiming = false;
+                clearInterval(powerInterval);
+                
+                const touch = e.changedTouches[0];
+                const rect = gameContainer.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                
+                const angle = Math.atan2(y - window.innerHeight / 2, x - 100) * 180 / Math.PI;
+                createArrow(100, window.innerHeight / 2, angle, power);
+                
+                power = 0;
+                powerFill.style.height = '0%';
+                
+                const bow = document.querySelector('.bow');
+                bow.style.transform = 'translateY(-50%) rotate(0deg)';
+            }
+        });
+
+        // Prevent context menu
+        gameContainer.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
     </script>
 </body>
 </html> 
