@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te amo Mi Reina</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .main-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: bold;
+            color: #8B5CF6;
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+            z-index: 100;
+            animation: textGlow 3s ease-in-out infinite;
+            text-align: center;
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(139, 92, 246, 1), 0 0 60px rgba(139, 92, 246, 0.6);
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .click-text {
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: bold;
+            pointer-events: none;
+            animation: clickAnimation 2s ease-out forwards;
+            z-index: 200;
+        }
+
+        @keyframes clickAnimation {
+            0% {
+                opacity: 1;
+                transform: scale(0.5) translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2) translateY(-20px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1) translateY(-40px);
+            }
+        }
+
+        .flower {
+            position: absolute;
+            pointer-events: none;
+            animation: flowerFloat 8s linear infinite;
+        }
+
+        .flower-container {
+            position: relative;
+            width: 60px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .flower-head {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .flower-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .flower-stem {
+            width: 3px;
+            height: 50px;
+            background: linear-gradient(to bottom, #90EE90, #7CFC00);
+            border-radius: 2px;
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .flower-leaves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .flower-leaf {
+            position: absolute;
+            width: 8px;
+            height: 6px;
+            background: linear-gradient(to bottom, #90EE90, #7CFC00);
+            border-radius: 50% 50% 50% 0;
+            transform-origin: center;
+        }
+
+        .flower-leaf.left {
+            left: -6px;
+            top: 15px;
+            transform: rotate(-45deg);
+        }
+
+        .flower-leaf.right {
+            right: -6px;
+            top: 25px;
+            transform: rotate(45deg) scaleX(-1);
+        }
+
+        @keyframes flowerFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 1.2rem;
+            pointer-events: none;
+            animation: sparkleAnimation 1.5s ease-out forwards;
+            z-index: 150;
+        }
+
+        @keyframes sparkleAnimation {
+            0% {
+                opacity: 1;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
+            }
+        }
+
+        /* Purple color variations for flowers */
+        .flower-purple-1 { background: linear-gradient(135deg, #8B5CF6, #A855F7); }
+        .flower-purple-2 { background: linear-gradient(135deg, #7C3AED, #8B5CF6); }
+        .flower-purple-3 { background: linear-gradient(135deg, #A855F7, #C084FC); }
+        .flower-purple-4 { background: linear-gradient(135deg, #6D28D9, #7C3AED); }
+        .flower-purple-5 { background: linear-gradient(135deg, #C084FC, #D8B4FE); }
+        .flower-purple-6 { background: linear-gradient(135deg, #5B21B6, #6D28D9); }
+        .flower-purple-7 { background: linear-gradient(135deg, #D8B4FE, #E9D5FF); }
+
+        .center-purple-1 { background: linear-gradient(135deg, #FCD34D, #F59E0B); }
+        .center-purple-2 { background: linear-gradient(135deg, #F59E0B, #D97706); }
+        .center-purple-3 { background: linear-gradient(135deg, #D97706, #B45309); }
+        .center-purple-4 { background: linear-gradient(135deg, #B45309, #92400E); }
+        .center-purple-5 { background: linear-gradient(135deg, #92400E, #78350F); }
+        .center-purple-6 { background: linear-gradient(135deg, #78350F, #451A03); }
+        .center-purple-7 { background: linear-gradient(135deg, #451A03, #92400E); }
+
+        /* Purple color variations for click text */
+        .text-purple-1 { color: #8B5CF6; }
+        .text-purple-2 { color: #A855F7; }
+        .text-purple-3 { color: #7C3AED; }
+        .text-purple-4 { color: #C084FC; }
+        .text-purple-5 { color: #6D28D9; }
+        .text-purple-6 { color: #D8B4FE; }
+        .text-purple-7 { color: #E9D5FF; }
+
+        @media (max-width: 768px) {
+            .main-text {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-text">Te amo Mi Reina</div>
+
+    <script>
+        const purpleColors = [
+            'flower-purple-1', 'flower-purple-2', 'flower-purple-3', 'flower-purple-4',
+            'flower-purple-5', 'flower-purple-6', 'flower-purple-7'
+        ];
+
+        const centerColors = [
+            'center-purple-1', 'center-purple-2', 'center-purple-3', 'center-purple-4',
+            'center-purple-5', 'center-purple-6', 'center-purple-7'
+        ];
+
+        const textColors = [
+            'text-purple-1', 'text-purple-2', 'text-purple-3', 'text-purple-4',
+            'text-purple-5', 'text-purple-6', 'text-purple-7'
+        ];
+
+        // Create flower structure
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            
+            const flowerContainer = document.createElement('div');
+            flowerContainer.className = 'flower-container';
+            
+            // Create flower head
+            const flowerHead = document.createElement('div');
+            flowerHead.className = 'flower-head';
+            
+            // Add random purple color
+            const colorIndex = Math.floor(Math.random() * purpleColors.length);
+            flowerHead.classList.add(purpleColors[colorIndex]);
+            
+            // Create flower center
+            const flowerCenter = document.createElement('div');
+            flowerCenter.className = 'flower-center';
+            flowerCenter.classList.add(centerColors[colorIndex]);
+            
+            flowerHead.appendChild(flowerCenter);
+            flowerContainer.appendChild(flowerHead);
+            
+            // Create stem
+            const stem = document.createElement('div');
+            stem.className = 'flower-stem';
+            
+            // Create leaves
+            const leaves = document.createElement('div');
+            leaves.className = 'flower-leaves';
+            
+            const leftLeaf = document.createElement('div');
+            leftLeaf.className = 'flower-leaf left';
+            leaves.appendChild(leftLeaf);
+            
+            const rightLeaf = document.createElement('div');
+            rightLeaf.className = 'flower-leaf right';
+            leaves.appendChild(rightLeaf);
+            
+            stem.appendChild(leaves);
+            flowerContainer.appendChild(stem);
+            
+            flower.appendChild(flowerContainer);
+            
+            // Random position and animation duration
+            flower.style.left = Math.random() * 100 + '%';
+            flower.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            flower.style.animationDelay = Math.random() * 2 + 's';
+            
+            return flower;
+        }
+
+        // Create click text
+        function createClickText(x, y) {
+            const text = document.createElement('div');
+            text.className = 'click-text';
+            text.textContent = 'Te amo Mi Reina';
+            
+            // Random purple color
+            const colorIndex = Math.floor(Math.random() * textColors.length);
+            text.classList.add(textColors[colorIndex]);
+            
+            text.style.left = x + 'px';
+            text.style.top = y + 'px';
+            
+            document.body.appendChild(text);
+            
+            // Remove after animation
+            setTimeout(() => {
+                text.remove();
+            }, 2000);
+        }
+
+        // Create sparkle effect
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = '✨';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            
+            document.body.appendChild(sparkle);
+            
+            // Remove after animation
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        // Handle click events
+        document.addEventListener('click', function(e) {
+            // Create click text
+            createClickText(e.clientX - 50, e.clientY - 20);
+            
+            // Create sparkles
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const offsetX = (Math.random() - 0.5) * 100;
+                    const offsetY = (Math.random() - 0.5) * 100;
+                    createSparkle(e.clientX + offsetX, e.clientY + offsetY);
+                }, i * 100);
+            }
+        });
+
+        // Create background flowers
+        function createBackgroundFlowers() {
+            setInterval(() => {
+                const flower = createFlower();
+                document.body.appendChild(flower);
+                
+                // Remove flower after animation
+                setTimeout(() => {
+                    if (flower.parentNode) {
+                        flower.remove();
+                    }
+                }, 10000);
+            }, 2000);
+        }
+
+        // Create initial flowers
+        function createInitialFlowers() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const flower = createFlower();
+                    document.body.appendChild(flower);
+                    
+                    setTimeout(() => {
+                        if (flower.parentNode) {
+                            flower.remove();
+                        }
+                    }, 10000);
+                }, i * 500);
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            createInitialFlowers();
+            createBackgroundFlowers();
+        };
+
+        // Add touch support for mobile
+        document.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            
+            // Create click text
+            createClickText(touch.clientX - 50, touch.clientY - 20);
+            
+            // Create sparkles
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const offsetX = (Math.random() - 0.5) * 100;
+                    const offsetY = (Math.random() - 0.5) * 100;
+                    createSparkle(touch.clientX + offsetX, touch.clientY + offsetY);
+                }, i * 100);
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html> 
