@@ -1084,44 +1084,43 @@
                     <h2>Our Memories</h2>
                     <p>Here's where our special photos will go. Every picture tells a story of our love.</p>
                     <div class="photo-slideshow">
-                        <div class="slideshow-container">
+                         <div class="slideshow-container">
                             <div class="slide active">
-                                <img src="C:\MyLove\image\download (2).jpg" alt="Memory 1" class="memory-photo">
+                                <img src="image/download (2).jpg" alt="Memory 1" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download (1).jpg" alt="Memory 2" class="memory-photo">
+                                <img src="image/download (1).jpg" alt="Memory 2" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download (4).jpg" alt="Memory 3" class="memory-photo">
+                                <img src="image/download (4).jpg" alt="Memory 3" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download (5).jpg" alt="Memory 4" class="memory-photo">
+                                <img src="image/download (5).jpg" alt="Memory 4" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download (7).jpg" alt="Memory 5" class="memory-photo">
+                                <img src="image/download (7).jpg" alt="Memory 5" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download (6).jpg" alt="Memory 6" class="memory-photo">
+                                <img src="image/download (6).jpg" alt="Memory 6" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download (8).jpg" alt="Memory 7" class="memory-photo">
+                                <img src="image/download (8).jpg" alt="Memory 7" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download (10).jpg" alt="Memory 8" class="memory-photo">
+                                <img src="image/download (10).jpg" alt="Memory 8" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
                             <div class="slide">
-                                <img src="C:\MyLove\image\download.jpg" alt="Memory 9" class="memory-photo">
+                                <img src="image/download.jpg" alt="Memory 9" class="memory-photo">
                                 <div class="slide-caption">Date 💜</div>
                             </div>
-                        </div>
                         
                         <div class="slideshow-controls">
                             <button class="control-btn prev-btn" onclick="changeSlide(-1)">❮</button>
@@ -1666,6 +1665,9 @@
             createGarden();
             setTimeout(createFireflies, 500);
             
+            // Initialize slideshow
+            initSlideshow();
+            
             // Monitor content height changes
             const resizeObserver = new ResizeObserver(() => {
                 const gardenContainer = document.querySelector('.garden-container');
@@ -1713,6 +1715,13 @@
                     
                     setTimeout(() => element.remove(), 8000);
                 }, i * 300);
+            }
+            
+            // Add touch event listeners for slideshow
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            if (slideshowContainer) {
+                slideshowContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+                slideshowContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
             }
         };
 
