@@ -1665,6 +1665,9 @@
             createGarden();
             setTimeout(createFireflies, 500);
             
+            // Initialize slideshow
+            initSlideshow();
+            
             // Monitor content height changes
             const resizeObserver = new ResizeObserver(() => {
                 const gardenContainer = document.querySelector('.garden-container');
@@ -1712,6 +1715,13 @@
                     
                     setTimeout(() => element.remove(), 8000);
                 }, i * 300);
+            }
+            
+            // Add touch event listeners for slideshow
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            if (slideshowContainer) {
+                slideshowContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+                slideshowContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
             }
         };
 
